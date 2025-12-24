@@ -70,6 +70,8 @@ export default function PageLoader() {
     const tl = gsap.timeline({ defaults: { ease: "hop" } });
     const tags: Element[] = gsap.utils.toArray(".tag") as Element[];
 
+    tl.set(".loader-container", { display: "block" });
+
     tags.forEach((tag, index) => {
       tl.to(
         tag.querySelectorAll("p .word"),
@@ -167,6 +169,9 @@ export default function PageLoader() {
       {
         clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
         duration: 1,
+        onComplete: () => {
+          setIsLoading(false);
+        },
       },
       5
     );
@@ -175,7 +180,7 @@ export default function PageLoader() {
   if (!isLoading) return null;
 
   return (
-    <>
+    <div className='loader-container hidden bg-black'>
       <div className='preloader'>
         <div className='intro-title'>
           <h1 className='uppercase font-semibold text-8xl h1-title'>
@@ -217,6 +222,6 @@ export default function PageLoader() {
           <p className='uppercase text-sm font-medium'>Wind Farm Development</p>
         </div>
       </div>
-    </>
+    </div>
   );
 }
