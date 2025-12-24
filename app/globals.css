@@ -8,6 +8,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-dm-sans: var(--font-dm-sans);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -118,5 +119,202 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+body {
+  font-family: "DM Sans", sans-serif;
+}
+
+@layer utilities {
+  /* Fade in animation - GPU accelerated */
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Fade in with slide up animation - GPU accelerated */
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 20px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  /* Slide down animation - GPU accelerated */
+  @keyframes slide-down {
+    from {
+      opacity: 0;
+      transform: translate3d(0, -10px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.6s ease-out forwards;
+    will-change: opacity;
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.6s ease-out forwards;
+    will-change: opacity, transform;
+  }
+
+  .animate-slide-down {
+    animation: slide-down 0.5s ease-out forwards;
+    will-change: opacity, transform;
+  }
+
+  /* Reduce motion for accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-fade-in,
+    .animate-fade-in-up,
+    .animate-slide-down {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* Bounce animation for loader dots */
+  @keyframes bounce {
+    0%,
+    80%,
+    100% {
+      transform: scale(0.8);
+      opacity: 0.5;
+    }
+    40% {
+      transform: scale(1.2);
+      opacity: 1;
+    }
+  }
+}
+
+.preloader,
+.split-overlay,
+.tags-overlay {
+  position: fixed;
+  width: 100vw;
+  height: 100svh;
+}
+
+.preloader,
+.split-overlay {
+  background-color: #0a0a0a;
+  color: #fff;
+}
+
+.preloader,
+.tags-overlay {
+  z-index: 10;
+}
+
+.split-overlay {
+  z-index: 1;
+}
+
+.intro-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  text-align: center;
+}
+
+.outro-title {
+  position: absolute;
+  top: 50%;
+  left: calc(50% + 10rem);
+  transform: translate(-50%, -50%);
+}
+
+.tag {
+  position: absolute;
+  width: max-content;
+  color: #5a5a5a;
+  overflow: hidden;
+}
+
+.tag-1 {
+  top: 15%;
+  left: 15%;
+}
+
+.tag-2 {
+  bottom: 15%;
+  left: 35%;
+}
+
+.tag-3 {
+  bottom: 30%;
+  right: 15%;
+}
+
+.tag-4 {
+  top: 30%;
+  right: 15%;
+}
+
+.tag-5 {
+  top: 20%;
+  left: 45%;
+}
+
+/* .landing-page-container {
+  clip-path: polygon(0 48%, 0 48%, 0 52%, 0 52%);
+  z-index: 2;
+} */
+
+.intro-title .char,
+.outro-title .char,
+.card .char {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.intro-title .char,
+.outro-title .char {
+  margin-top: 0.75rem;
+}
+
+.intro-title .char span,
+.outro-title .char span,
+.tag .word {
+  position: relative;
+  display: inline-block;
+  transform: translateY(-100%);
+  will-change: transform;
+}
+
+.intro-title .first-char {
+  transform-origin: top left;
+}
+
+@media (max-width: 1000px) {
+  .h1-title {
+    font-size: 2rem;
+  }
+
+  .outro-title {
+    left: calc(50% + 4rem);
+  }
+
+  .intro-title .char,
+  .outro-title .char {
+    margin-top: 0.5rem;
   }
 }
