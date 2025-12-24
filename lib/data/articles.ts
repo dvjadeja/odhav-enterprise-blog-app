@@ -245,3 +245,13 @@ export const getFeaturedArticles = (): Article[] => {
 export const getAllArticles = (): Article[] => {
   return staticArticles.filter(article => article.published);
 };
+
+// Get a single published article by slug (preferred) or by _id (fallback)
+export const getArticleBySlugOrId = (slugOrId: string): Article | undefined => {
+  const published = getAllArticles();
+  return published.find((a) => a.slug === slugOrId) ?? published.find((a) => a._id === slugOrId);
+};
+
+export const getAllArticleSlugs = (): string[] => {
+  return getAllArticles().map((a) => a.slug);
+};
